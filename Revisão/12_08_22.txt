@@ -1,0 +1,79 @@
+Microsoft Windows [versão 10.0.19043.1165]
+(c) Microsoft Corporation. Todos os direitos reservados.
+
+C:\Users\Alunos>cd c:\xampp\mysql\bin
+
+c:\xampp\mysql\bin>mysql -u root
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 34
+Server version: 10.4.17-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| revisao            |
+| test               |
++--------------------+
+6 rows in set (0.001 sec)
+
+MariaDB [(none)]> USE REVISAO;
+Database changed
+MariaDB [REVISAO]> SHOW TABLES;
++-------------------+
+| Tables_in_revisao |
++-------------------+
+| clientes          |
+| compras           |
+| produtos          |
++-------------------+
+3 rows in set (0.001 sec)
+
+MariaDB [REVISAO]> DESCRIBE CLIENTES;
++--------------+--------------+------+-----+---------+----------------+
+| Field        | Type         | Null | Key | Default | Extra          |
++--------------+--------------+------+-----+---------+----------------+
+| id_cliente   | int(11)      | NO   | PRI | NULL    | auto_increment |
+| email        | varchar(255) | YES  |     | NULL    |                |
+| estado       | varchar(2)   | YES  |     | NULL    |                |
+| nome_cliente | varchar(255) | YES  |     | NULL    |                |
++--------------+--------------+------+-----+---------+----------------+
+4 rows in set (0.011 sec)
+
+MariaDB [REVISAO]> INSERT INTO CLIENTES (NOME_CLIENTE, EMAIL, ESTADO)
+    -> VALUES('ETECMCM', 'etecmcm@email.com', 'SP');
+Query OK, 1 row affected (0.011 sec)
+
+MariaDB [REVISAO]> SELECT * FROM CLIENTES;
++------------+-------------------+--------+--------------+
+| id_cliente | email             | estado | nome_cliente |
++------------+-------------------+--------+--------------+
+|          1 | etecmcm@email.com | SP     | ETECMCM      |
++------------+-------------------+--------+--------------+
+1 row in set (0.001 sec)
+
+MariaDB [REVISAO]> INSERT INTO CLIENTES (NOME_CLIENTE, EMAIL, ESTADO)
+    -> VALUES('ETECMAUA', 'etecmaua@email.com', 'SP'),
+    -> ('ETEC ', 'etecmaua@email.com', 'SP'),
+    -> ('ETECLG ', 'eteclg@email.com', 'RJ');
+Query OK, 3 rows affected (0.010 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+MariaDB [REVISAO]> SELECT * FROM CLIENTES;
++------------+--------------------+--------+--------------+
+| id_cliente | email              | estado | nome_cliente |
++------------+--------------------+--------+--------------+
+|          1 | etecmcm@email.com  | SP     | ETECMCM      |
+|          2 | etecmaua@email.com | SP     | ETECMAUA     |
+|          3 | etecmaua@email.com | SP     | ETEC         |
+|          4 | eteclg@email.com   | RJ     | ETECLG       |
++------------+--------------------+--------+--------------+
+4 rows in set (0.000 sec)
