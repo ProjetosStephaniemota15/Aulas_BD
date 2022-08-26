@@ -1,0 +1,226 @@
+Microsoft Windows [versão 10.0.19043.1165]
+(c) Microsoft Corporation. Todos os direitos reservados.
+
+C:\Users\Alunos>cd c:\xampp\mysql\bin
+
+c:\xampp\mysql\bin>mysql -u root
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 34
+Server version: 10.4.17-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> use revisao;
+Database changed
+MariaDB [revisao]> describe produtos;
++--------------+--------------+------+-----+---------+----------------+
+| Field        | Type         | Null | Key | Default | Extra          |
++--------------+--------------+------+-----+---------+----------------+
+| codigo       | int(11)      | NO   | PRI | NULL    | auto_increment |
+| nome_produto | varchar(255) | YES  |     | NULL    |                |
+| cor          | varchar(255) | YES  |     | NULL    |                |
+| preco        | decimal(5,2) | YES  |     | NULL    |                |
++--------------+--------------+------+-----+---------+----------------+
+4 rows in set (0.022 sec)
+
+MariaDB [revisao]> SELECT NOME_PRODUTO, COR
+    -> FROM PRODUTOS;
++-----------------+--------------+
+| NOME_PRODUTO    | COR          |
++-----------------+--------------+
+| CADERNO         | AZUL         |
+| LAPIS COLORIDO  | AMARELO      |
+| BORRACHA        | BRANCA       |
+| REGUA           | TRANSPARENTE |
+| PASTA DE FOLHAS | ROSA         |
+| PEN DRIVE       | PRETO        |
+| FICHARIO        | AZUL         |
++-----------------+--------------+
+7 rows in set (0.000 sec)
+
+MariaDB [revisao]> SELECT P.NOME_PRODUTO, P.COR
+    -> FROM PRODUTOS AS P;
++-----------------+--------------+
+| NOME_PRODUTO    | COR          |
++-----------------+--------------+
+| CADERNO         | AZUL         |
+| LAPIS COLORIDO  | AMARELO      |
+| BORRACHA        | BRANCA       |
+| REGUA           | TRANSPARENTE |
+| PASTA DE FOLHAS | ROSA         |
+| PEN DRIVE       | PRETO        |
+| FICHARIO        | AZUL         |
++-----------------+--------------+
+7 rows in set (0.000 sec)
+
+MariaDB [revisao]> SELECT COM.NF, COM.DATA, P.NOME_PRODUTO
+    -> FROM PRODUTOS AS P, COMPRAS AS COM;
+ERROR 1054 (42S22): Unknown column 'COM.DATA' in 'field list'
+MariaDB [revisao]> SELECT COM.NF, COM.DATA_COMPRA, P.NOME_PRODUTO
+    -> FROM PRODUTOS AS P, COMPRAS AS COM;
++----+-------------+-----------------+
+| NF | DATA_COMPRA | NOME_PRODUTO    |
++----+-------------+-----------------+
+|  1 | 2022-08-18  | CADERNO         |
+|  2 | 2022-08-18  | CADERNO         |
+|  3 | 2022-08-18  | CADERNO         |
+|  4 | 2022-08-18  | CADERNO         |
+|  5 | 2022-08-18  | CADERNO         |
+|  6 | 2022-07-13  | CADERNO         |
+|  1 | 2022-08-18  | LAPIS COLORIDO  |
+|  2 | 2022-08-18  | LAPIS COLORIDO  |
+|  3 | 2022-08-18  | LAPIS COLORIDO  |
+|  4 | 2022-08-18  | LAPIS COLORIDO  |
+|  5 | 2022-08-18  | LAPIS COLORIDO  |
+|  6 | 2022-07-13  | LAPIS COLORIDO  |
+|  1 | 2022-08-18  | BORRACHA        |
+|  2 | 2022-08-18  | BORRACHA        |
+|  3 | 2022-08-18  | BORRACHA        |
+|  4 | 2022-08-18  | BORRACHA        |
+|  5 | 2022-08-18  | BORRACHA        |
+|  6 | 2022-07-13  | BORRACHA        |
+|  1 | 2022-08-18  | REGUA           |
+|  2 | 2022-08-18  | REGUA           |
+|  3 | 2022-08-18  | REGUA           |
+|  4 | 2022-08-18  | REGUA           |
+|  5 | 2022-08-18  | REGUA           |
+|  6 | 2022-07-13  | REGUA           |
+|  1 | 2022-08-18  | PASTA DE FOLHAS |
+|  2 | 2022-08-18  | PASTA DE FOLHAS |
+|  3 | 2022-08-18  | PASTA DE FOLHAS |
+|  4 | 2022-08-18  | PASTA DE FOLHAS |
+|  5 | 2022-08-18  | PASTA DE FOLHAS |
+|  6 | 2022-07-13  | PASTA DE FOLHAS |
+|  1 | 2022-08-18  | PEN DRIVE       |
+|  2 | 2022-08-18  | PEN DRIVE       |
+|  3 | 2022-08-18  | PEN DRIVE       |
+|  4 | 2022-08-18  | PEN DRIVE       |
+|  5 | 2022-08-18  | PEN DRIVE       |
+|  6 | 2022-07-13  | PEN DRIVE       |
+|  1 | 2022-08-18  | FICHARIO        |
+|  2 | 2022-08-18  | FICHARIO        |
+|  3 | 2022-08-18  | FICHARIO        |
+|  4 | 2022-08-18  | FICHARIO        |
+|  5 | 2022-08-18  | FICHARIO        |
+|  6 | 2022-07-13  | FICHARIO        |
++----+-------------+-----------------+
+42 rows in set (0.001 sec)
+
+MariaDB [revisao]> SELECT COM.NF, COM.DATA_COMPRA, P.NOME_PRODUTO]
+    -> FROM PRODUTOS AS P, COMPRAS AS COM
+    -> WHERE P.CODIGO = COM.CODIGO AND P.CODIGO = 1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ']
+FROM PRODUTOS AS P, COMPRAS AS COM
+WHERE P.CODIGO = COM.CODIGO AND P.CODIGO...' at line 1
+MariaDB [revisao]> SELECT com.nf, com.data_compra, p.nome_produto
+    -> FROM produtos AS p, compras AS com
+    -> WHERE p.codigo = com.codigo and p.codigo = 1;
++----+-------------+--------------+
+| nf | data_compra | nome_produto |
++----+-------------+--------------+
+|  1 | 2022-08-18  | CADERNO      |
+|  3 | 2022-08-18  | CADERNO      |
++----+-------------+--------------+
+2 rows in set (0.001 sec)
+
+MariaDB [revisao]> SELECT * FROM PRODUTOS;
++--------+-----------------+--------------+-------+
+| codigo | nome_produto    | cor          | preco |
++--------+-----------------+--------------+-------+
+|      1 | CADERNO         | AZUL         | 15.75 |
+|      2 | LAPIS COLORIDO  | AMARELO      |  0.99 |
+|      3 | BORRACHA        | BRANCA       |  1.50 |
+|      4 | REGUA           | TRANSPARENTE |  5.32 |
+|      5 | PASTA DE FOLHAS | ROSA         |  8.50 |
+|      6 | PEN DRIVE       | PRETO        | 34.20 |
+|      7 | FICHARIO        | AZUL         | 15.00 |
++--------+-----------------+--------------+-------+
+7 rows in set (0.001 sec)
+
+MariaDB [revisao]> UPDATE PRODUTOS
+    -> SET NOME_PRODUTO = 'REGUA DE 30 CM'
+    -> WHERE CODIGO = 4;
+Query OK, 1 row affected (0.002 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [revisao]> SELECT * FROM PRODUTOS;
++--------+-----------------+--------------+-------+
+| codigo | nome_produto    | cor          | preco |
++--------+-----------------+--------------+-------+
+|      1 | CADERNO         | AZUL         | 15.75 |
+|      2 | LAPIS COLORIDO  | AMARELO      |  0.99 |
+|      3 | BORRACHA        | BRANCA       |  1.50 |
+|      4 | REGUA DE 30 CM  | TRANSPARENTE |  5.32 |
+|      5 | PASTA DE FOLHAS | ROSA         |  8.50 |
+|      6 | PEN DRIVE       | PRETO        | 34.20 |
+|      7 | FICHARIO        | AZUL         | 15.00 |
++--------+-----------------+--------------+-------+
+7 rows in set (0.000 sec)
+
+MariaDB [revisao]> UPDATE PRODUTOS
+    -> SET PRECO = PRECO * 1.1
+    -> WHERE CODIGO = 3;
+Query OK, 1 row affected (0.010 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [revisao]> SELECT * FROM PRODUTOS;
++--------+-----------------+--------------+-------+
+| codigo | nome_produto    | cor          | preco |
++--------+-----------------+--------------+-------+
+|      1 | CADERNO         | AZUL         | 15.75 |
+|      2 | LAPIS COLORIDO  | AMARELO      |  0.99 |
+|      3 | BORRACHA        | BRANCA       |  1.65 |
+|      4 | REGUA DE 30 CM  | TRANSPARENTE |  5.32 |
+|      5 | PASTA DE FOLHAS | ROSA         |  8.50 |
+|      6 | PEN DRIVE       | PRETO        | 34.20 |
+|      7 | FICHARIO        | AZUL         | 15.00 |
++--------+-----------------+--------------+-------+
+7 rows in set (0.000 sec)
+
+MariaDB [revisao]> SELECT * FROM PRODUTOS
+    -> WHERE PRECO BETWEEN 0.50 AND 2.00;
++--------+----------------+---------+-------+
+| codigo | nome_produto   | cor     | preco |
++--------+----------------+---------+-------+
+|      2 | LAPIS COLORIDO | AMARELO |  0.99 |
+|      3 | BORRACHA       | BRANCA  |  1.65 |
++--------+----------------+---------+-------+
+2 rows in set (0.000 sec)
+
+MariaDB [revisao]> SELECT * FROM PRODUTOS
+    -> WHERE COR = AZUL;
+ERROR 1054 (42S22): Unknown column 'AZUL' in 'where clause'
+MariaDB [revisao]> SELECT * FROM PRODUTOS
+    -> WHERE COR = 'AZUL';
++--------+--------------+------+-------+
+| codigo | nome_produto | cor  | preco |
++--------+--------------+------+-------+
+|      1 | CADERNO      | AZUL | 15.75 |
+|      7 | FICHARIO     | AZUL | 15.00 |
++--------+--------------+------+-------+
+2 rows in set (0.000 sec)
+
+MariaDB [revisao]> SELECT * FROM PRODUTOS
+    -> WHERE PRECO < 10.00;
++--------+-----------------+--------------+-------+
+| codigo | nome_produto    | cor          | preco |
++--------+-----------------+--------------+-------+
+|      2 | LAPIS COLORIDO  | AMARELO      |  0.99 |
+|      3 | BORRACHA        | BRANCA       |  1.65 |
+|      4 | REGUA DE 30 CM  | TRANSPARENTE |  5.32 |
+|      5 | PASTA DE FOLHAS | ROSA         |  8.50 |
++--------+-----------------+--------------+-------+
+4 rows in set (0.001 sec)
+
+MariaDB [revisao]> SELECT * FROM PRODUTOS
+    -> WHERE PRECO > 10.00;
++--------+--------------+-------+-------+
+| codigo | nome_produto | cor   | preco |
++--------+--------------+-------+-------+
+|      1 | CADERNO      | AZUL  | 15.75 |
+|      6 | PEN DRIVE    | PRETO | 34.20 |
+|      7 | FICHARIO     | AZUL  | 15.00 |
++--------+--------------+-------+-------+
+3 rows in set (0.000 sec)
